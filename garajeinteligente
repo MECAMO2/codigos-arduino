@@ -1,0 +1,100 @@
+//CODIGO GARAJE INTELIGENTE 
+//BY JM INGENIERO MECATRONICO
+//PAGINA TIK TOK MECAMO 2
+// TELEFONO CONTACTO +573134851403
+// ASESORIAS Y PROYECTOS COLEGIO O UNIVERSDIAD
+#include <Servo.h>
+int s1=3;
+int s2=4;
+int s3=5;
+Servo servo1;
+int a,b,c;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+ 
+  // Iniciamos el servo para que empiece a trabajar con el pin 9
+  servo1.attach(2);
+  for(int i=6;i<=13;i++){
+    pinMode(i,OUTPUT);
+  }
+  pinMode(s1,OUTPUT);
+  pinMode(s2,OUTPUT);
+  pinMode(s3,OUTPUT);
+  servo1.write(0);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  a=digitalRead(s1);
+  c=digitalRead(s2);
+  b=digitalRead(s3);
+  if(a==0&&b==0&&c==0){
+    tres();
+  }
+  if(a==1&&b==0&&c==0){
+    uno();
+  }
+  if(b==1&&a==0&&c==0){
+    uno();
+  }
+  if(c==1&&b==0&&a==0){
+    uno();
+  }
+  if(a==1&&b==1&&c==0){
+    dos();
+  }
+  if(a==1&&b==0&&c==1){
+    dos();
+  }
+  if(a==0&&b==1&&c==1){
+    dos();
+  }
+  if(a==1&&b==1&&c==1){
+    cero();
+    servo1.write(0);
+  }
+
+}
+void cero(){
+  digitalWrite(6,HIGH);
+  digitalWrite(7,HIGH);
+  digitalWrite(8,HIGH);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(12,HIGH);
+  servo1.write(0);
+}
+void uno(){
+  digitalWrite(6,LOW);
+  digitalWrite(7,HIGH);
+  digitalWrite(8,HIGH);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  servo1.write(180);
+}
+void dos(){
+  digitalWrite(6,HIGH);
+  digitalWrite(7,HIGH);
+  digitalWrite(8,LOW);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,HIGH);
+  digitalWrite(11,HIGH);
+  digitalWrite(12,LOW);
+  servo1.write(180);
+}
+void tres(){
+  digitalWrite(6,HIGH);
+  digitalWrite(7,HIGH);
+  digitalWrite(8,HIGH);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(12,LOW);
+  servo1.write(180);
+}
+
