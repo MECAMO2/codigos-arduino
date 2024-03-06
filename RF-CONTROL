@@ -1,0 +1,57 @@
+#include <RCSwitch.h>
+
+RCSwitch mySwitch = RCSwitch();
+int bandera=0;
+int b1=3;
+int b2=4;
+int A=0;
+int B=0;
+int C=0;
+int D=0;
+void setup() {
+  Serial.begin(9600);
+  mySwitch.enableReceive(0);  // Receiver on interrupt 0 => that is pin #2
+  pinMode(b1,OUTPUT);
+  pinMode(b2,OUTPUT);
+  digitalWrite(b1,HIGH);
+  digitalWrite(b2,HIGH);
+}
+
+void loop() {
+   if (mySwitch.available()) {
+    
+    Serial.print("Received ");
+    Serial.print( mySwitch.getReceivedValue() );
+    Serial.print(" / ");
+    Serial.print( mySwitch.getReceivedBitlength() );
+    Serial.print("bit ");
+    Serial.print("Protocol: ");
+    Serial.println( mySwitch.getReceivedProtocol() );
+      bandera=mySwitch.getReceivedValue();
+     Serial.println( bandera );
+    mySwitch.resetAvailable();
+    
+  }
+// Received 5592512 / 24bit Protocol: 1 ==A
+// Received 5592368 / 24bit Protocol: 1 ==B
+// Received 5592332 / 24bit Protocol: 1 ==C
+// Received 5592323 / 24bit Protocol: 1 ==D
+  A=5592512;
+  B=5592368;
+  C=5592332;
+  D=5592323;
+ 
+ if(bandera==A){
+  digitalWrite(b1,LOW);
+   }
+ if(bandera==B){
+  digitalWrite(b1,HIGH);
+ }
+ if(bandera==C){
+  digitalWrite(b2,LOW);
+ }
+ if(bandera==D){
+  digitalWrite(b2,HIGH);
+ }
+ 
+}
