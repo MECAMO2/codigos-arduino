@@ -1,0 +1,131 @@
+//CODIGO ESCALERAS INTELIGENTES CON ARDUINO UNO 
+
+// By. JOSE MORENO INGENIERO EN MECATRONICA
+
+//MECAMO 
+// si quieres llevar este proyecto a la vida real debes de colocar reles de salida y alimentar las luces segun lo requieras. 
+
+//Declaramos los sensores los cuales estaran conectados al pin digital 3 para el sensor que leera cuando la persona va subiendo y el pin  digital 4 para cuando esta vaya bajando
+int sensorsubida = 3;
+int sensorbajada = 4;
+
+//declaramos variables las cuales nos serviran para almacenar el estado del sensor
+int s1=0;
+int s2=0;
+
+void setup() {
+  // put your setup code here, to run once:
+
+  //declaramos los sensores como entrada
+  pinMode(sensorsubida,INPUT); 
+  pinMode(sensorbajada,INPUT); 
+
+  //declaramos los demas pines digitales como salida con un ciclo for el cual emepzara en el puerto digital 5 y terminara en el puerto digital 13
+  for (int i=5 ; i<14; i++){
+    pinMode(i,OUTPUT);
+  }
+  Serial.begin(9600); //iniciamos el puerto serial para poder ver en el monitor serial el desarrollo del codigo
+
+  delay (100);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  //alamcenamos en las variables s1 y s2 el estado del sensor
+  s1=digitalRead(sensorsubida);
+  delay(100);
+  s2=digitalRead(sensorbajada);
+  delay(100);
+  s1=digitalRead(sensorsubida);
+  delay(100);
+  Serial.print("Subida:  ");
+  Serial.print(s1);
+  Serial.print("     ");
+  Serial.print("bajada:  ");
+  Serial.println(s2);
+  delay(100);
+
+  //tercera condicion si el ambos sensores detectan movimiento
+  //se encenderan las luces de la escalera 5 hasta la 9 y de la ecalera 13 hasta la 10 
+  //una por una cada segundo, despues de que enciendan todo demorara 3 segundos y apagara una a una cada segundo
+
+  if(s1==0&&s2==0){
+    Serial.println("ambos");
+          digitalWrite(5,HIGH);
+          digitalWrite(13,HIGH);
+          delay(800);
+          digitalWrite(6,HIGH);
+          digitalWrite(12,HIGH);
+          delay(800);
+          digitalWrite(7,HIGH);
+          digitalWrite(11,HIGH);
+          delay(800);
+          digitalWrite(8,HIGH);
+          digitalWrite(10,HIGH);
+          delay(800);
+          digitalWrite(9,HIGH);
+          delay(800);
+
+      delay(2000);
+
+          digitalWrite(9,LOW);
+          delay(300);
+          digitalWrite(10,LOW);
+          digitalWrite(8,LOW);
+          delay(300);
+          digitalWrite(11,LOW);
+          digitalWrite(7,LOW);
+          delay(300);
+          digitalWrite(12,LOW);
+          digitalWrite(6,LOW);
+          delay(300);
+          digitalWrite(13,LOW);
+          digitalWrite(5,LOW);
+          delay(300);
+  
+  
+  s1=1;
+  s2=1;
+  }
+
+
+  //primera condicion si el sensor de subida detecta movimiento
+  //se encenderan las luces de la escalera 5 hasta la 13 
+  //una por una cada segundo, despues de que enciendan todo demorara 3 segundos y apagara una a una cada segundo 
+  if(s1==0){
+    Serial.println("subiendo");
+    for ( int i = 5 ; i < 14 ; i++){
+      digitalWrite(i,HIGH);
+      delay(800);
+    }
+    delay(2000);
+    for ( int i = 5 ; i < 14 ; i++){
+      digitalWrite(i,LOW);
+      delay(300);
+    }
+    s1=1;
+    s2=1;
+  }
+
+  //segunda condicion si el sensor de bajada detecta movimiento
+  //se encenderan las luces de la escalera 13 hasta la 5
+  //una por una cada segundo, despues de que enciendan todo demorara 3 segundos y apagara una a una cada segundo
+
+  if(s2==0){
+    Serial.println("bajando");
+    for ( int i = 13 ; i > 4 ; i--){
+      digitalWrite(i,HIGH);
+      delay(800);
+    }
+    delay(2000);
+    for ( int i = 13 ; i > 4 ; i--){
+      digitalWrite(i,LOW);
+      delay(300);
+    }
+    s1=1;
+    s2=1;
+  }
+
+  
+}
