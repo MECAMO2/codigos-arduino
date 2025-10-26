@@ -1,0 +1,63 @@
+//By MECAMO
+//26/10/25
+int red=3; //LED ROJO SEMAFORO
+int yellow=4; //LED AMARRILLO SEMAFORO
+int green=5; //LED VERDE SEMAFORO
+int buzzer=6; //ALARMA SONORA
+
+void setup() {
+  // put your setup code here, to run once:
+  //DECLARAMOS LOS LEDS Y EL BUXXER COMO SALIDAS DIGITALES
+  pinMode(red,OUTPUT);
+  pinMode(yellow,OUTPUT);
+  pinMode(green,OUTPUT);
+  pinMode(buzzer,OUTPUT);
+  //INICIALIZAMOS LOS PUERTOS DIGITALES TODOS EN 0 O APAGADOS 
+  digitalWrite(red,HIGH);
+  digitalWrite(yellow,LOW);
+  digitalWrite(green,LOW);
+  digitalWrite(buzzer,LOW);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //FUNCIONAMIENTO LUZ ROJA
+  digitalWrite(red,HIGH);
+  digitalWrite(yellow,LOW);
+  digitalWrite(green,LOW);
+  delay(10000);
+  digitalWrite(buzzer,HIGH);
+  delay(100);
+  digitalWrite(buzzer,LOW);
+  delay(100);
+  //FUNCIONAMIENTO LUZ AMARRILLA
+  digitalWrite(red,LOW);
+  digitalWrite(yellow,HIGH);
+  digitalWrite(green,LOW);
+  delay(2000);
+  digitalWrite(buzzer,HIGH);
+  delay(100);
+  digitalWrite(buzzer,LOW);
+  delay(100);
+  //FUNCIONAMIENTO LUZ VERDE
+  digitalWrite(red,LOW);
+  digitalWrite(yellow,LOW);
+  digitalWrite(green,HIGH);
+  delay(7000);
+  digitalWrite(buzzer,HIGH);
+  delay(100);
+  digitalWrite(buzzer,LOW);
+  delay(100);
+  //FUNCNIOMIENTO LUZ AMARRILLA
+  digitalWrite(red,LOW);
+  digitalWrite(yellow,HIGH);
+  digitalWrite(green,LOW);
+  delay(2000);
+  //CILCO PITIDO ALARMA BUZZER
+  for(int i=0;i<10;i++){
+  digitalWrite(buzzer,HIGH);
+  delay(100);
+  digitalWrite(buzzer,LOW);
+  delay(100);
+  }
+}
